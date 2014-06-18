@@ -1,0 +1,13 @@
+{% extends "bootstrap/base.html" %}
+{% include 'header.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+      <h1>Welcome</h1>
+      {% for stock in stocklist %}
+      <p><a href="/remove/{{stock['stock']}}"><i class="glyphicon glyphicon-minus"></i></a> {{stock['stock']}} : {{stocks.get_quote(stock['stock'])}}</p>
+      {% endfor %}
+    </div>
+</div>
+{% endblock %}
