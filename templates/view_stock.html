@@ -4,15 +4,13 @@
 {% block content %}
 <div class="container">
     <div class="page-header">
-      <h1>Last Week in</h1>
-      <p class="lead">{{ticker}}: {{price}}</p>
+      <h1>Last Week in {{ticker}}</h1>
     </div>
     <div id="row">
       <div class="col-md-6">
         <div id="graph" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
       </div>
       <div class="col-md-6">
-        {% for date in stock_hist['Open'].keys()|sort(-1): %}
         <h2>{{stock_hist[0]}}</h2>
           
         <table class="table">
@@ -25,18 +23,19 @@
             <th>Volume</th>
           </thead>
           <tbody>
+        {% for date in stock_hist['Open'].keys()|sort(-1): %}
             <tr>
               <td>{{date.date()}}</td>
-              <td>{{stock_hist['Open'][date]}}</td>
-              <td>{{stock_hist['Close'][date]}}</td>
-              <td>{{stock_hist['High'][date]}}</td>
-              <td>{{stock_hist['Low'][date]}}</td>
+              <td>{{stock_hist['Open'][date]|round(2)}}</td>
+              <td>{{stock_hist['Close'][date]|round(2)}}</td>
+              <td>{{stock_hist['High'][date]|round(2)}}</td>
+              <td>{{stock_hist['Low'][date]|round(2)}}</td>
               <td>{{stock_hist['Volume'][date]}}</td>
             </tr>
+        {% endfor %}
           </tbody>
         </table>
         </br>
-        {% endfor %}
 </div>
 {% endblock %}
 
