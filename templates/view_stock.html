@@ -8,7 +8,10 @@
       <p class="lead">{{ticker}}: {{price}}</p>
     </div>
     <div id="row">
-      <div class="col-md-6 col-md-offset-3">
+      <div class="col-md-6">
+        <div id="graph" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+      </div>
+      <div class="col-md-6">
         {% for date in stock_hist['Open'].keys()|sort(-1): %}
         <h2>{{stock_hist[0]}}</h2>
           
@@ -35,4 +38,57 @@
         </br>
         {% endfor %}
 </div>
+{% endblock %}
+
+{% block scripts %}
+{{super()}}
+<script>
+$(function () {
+  $('#graph').highcharts({
+    title: {
+      text: 'Last week in {{ticker}}',
+      x: -20
+    },
+    {% set days = stock_hist['Open']|length() %}
+    {% set counter = 0 %}
+    xAxis: { categories: [{% for date in stock_hist['Open'].keys() %}'{{date.date()}}'{% set counter = counter + 1 %}{% if not counter == days: %},{% endif %}{% endfor %}]
+    },
+    yAxis: { 
+      title: {
+        text: 'Close ($)',
+      },
+      plotLines: [{
+          value: 0,
+          width: 1,
+          color: '#808080'
+        }]
+    },
+    tooltip: {
+      valuePrefix: '$'
+    },
+    legend: {
+      layout: 'vertical',
+      align: 'right',
+      verticalAlign: 'middle',
+      borderWidth: 0
+    },
+    series: [
+    {% for key in stock_hist: %}
+      {% if not key == "Volume" %}
+      { name: '{{key}}',
+        data: [
+          {% for date in stock_hist[key].keys(): %}
+            {{stock_hist[key][date]}},
+          {% endfor %}
+        ]
+      },
+      {% endif %}
+    {% endfor %}
+    ],
+  });
+}); 
+</script>
+
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
 {% endblock %}
