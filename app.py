@@ -64,9 +64,16 @@ def search():
     price = stocks.get_quote(ticker)
     return render_template('view.html', ticker=ticker,price=price) 
 
+@app.route('/view/<symbol>',methods=['GET'])
+def view_symbol(symbol):
+    stock_hist = stocks.get_historic(symbol,7)
+    print(stock_hist)
+    return render_template('view_stock.html', ticker=symbol,stock_hist=stock_hist) 
+
 @app.route('/profile/')
 def profile():
     stocklist = user.find()    
+   
     return render_template('profile.html', stocklist=stocklist, stocks=stocks)
 
 if __name__ == '__main__':

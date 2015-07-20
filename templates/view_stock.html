@@ -1,0 +1,38 @@
+{% extends "bootstrap/base.html" %}
+{% include 'header.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+      <h1>Last Week in</h1>
+      <p class="lead">{{ticker}}: {{price}}</p>
+    </div>
+    <div id="row">
+      <div class="col-md-6 col-md-offset-3">
+        {% for date in stock_hist['Open'].keys()|sort(-1): %}
+        <h2>{{stock_hist[0]}}</h2>
+          
+        <table class="table">
+          <thead>
+            <th>Date</th>
+            <th>Open</th>
+            <th>Close</th>
+            <th>High</th>
+            <th>Low</th>
+            <th>Volume</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{date.date()}}</td>
+              <td>{{stock_hist['Open'][date]}}</td>
+              <td>{{stock_hist['Close'][date]}}</td>
+              <td>{{stock_hist['High'][date]}}</td>
+              <td>{{stock_hist['Low'][date]}}</td>
+              <td>{{stock_hist['Volume'][date]}}</td>
+            </tr>
+          </tbody>
+        </table>
+        </br>
+        {% endfor %}
+</div>
+{% endblock %}
