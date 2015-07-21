@@ -6,7 +6,7 @@
     <div class="page-header">
       <h1>Welcome</h1>
       {% for stock in stocklist %}
-      <p><a href="/remove/{{stock['stock']}}"><i class="glyphicon glyphicon-minus"></i></a> <a href="/view/{{stock['stock']}}">{{stock['stock']}}</a> : {{stocks.get_quote(stock['stock'])}}</p>
+      <p><a href="/remove/{{stock['id']}}"><i class="glyphicon glyphicon-minus"></i></a> <a href="/view/{{stock['symbol']}}">{{stock['symbol']}}</a> : {{stocks['last_price']}}</p>
       {% endfor %}
     </div>
 </div>

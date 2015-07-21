@@ -5,7 +5,9 @@ Stocker is a simple stock portfolio app written in Python.
 Some of it's roadmap features include
 
   ~~- Historic Graphic for Stocks~~
-  - MongoEngine integration and utilization
+  ~~- MongoEngine integration and utilization~~
+  - CandleStick Charts
+  - DataTables in Profile
   - Portfolio Tracking
   - Stock recommendations based on current stock
   - BackTesting
