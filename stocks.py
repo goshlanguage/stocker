@@ -25,10 +25,10 @@ def get_quote(symbol):
 def get_historic(symbol, days):
     stock = {}
     quote = DataReader(symbol, 'yahoo', datetime.datetime.today().date()-datetime.timedelta(days), datetime.datetime.today().date())
-    stock['Open'] = quote['Open']
-    stock['Close'] = quote['Close']
-    stock['High'] = quote['High']
-    stock['Low'] = quote['Low']
-    stock['Volume'] = quote['Volume']
-    return stock
+    #stock['Open'] = quote['Open']
+    #stock['Close'] = quote['Close']
+    #stock['High'] = quote['High']
+    #stock['Low'] = quote['Low']
+    #stock['Volume'] = quote['Volume']
+    return quote #stock
 

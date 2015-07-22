@@ -8,7 +8,7 @@
     </div>
     <div id="row">
       <div class="col-md-6">
-        <div id="graph" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+        <div id="candle_chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
       </div>
       <div class="col-md-6">
         <h2>{{stock_hist[0]}}</h2>
@@ -36,58 +36,54 @@
           </tbody>
         </table>
         </br>
+      </div>
+    </div>
 </div>
 {% endblock %}
 
 {% block scripts %}
 {{super()}}
 <script>
-$(function () {
-  $('#graph').highcharts({
-    title: {
-      text: 'Last week in {{ticker}}',
-      x: -20
-    },
-    {% set days = stock_hist['Open']|length() %}
-    {% set counter = 0 %}
-    xAxis: { categories: [{% for date in stock_hist['Open'].keys() %}'{{date.date()}}'{% set counter = counter + 1 %}{% if not counter == days: %},{% endif %}{% endfor %}]
-    },
-    yAxis: { 
-      title: {
-        text: 'Close ($)',
-      },
-      plotLines: [{
-          value: 0,
-          width: 1,
-          color: '#808080'
-        }]
-    },
-    tooltip: {
-      valuePrefix: '$'
-    },
-    legend: {
-      layout: 'vertical',
-      align: 'right',
-      verticalAlign: 'middle',
-      borderWidth: 0
-    },
-    series: [
-    {% for key in stock_hist: %}
-      {% if not key == "Volume" %}
-      { name: '{{key}}',
-        data: [
-          {% for date in stock_hist[key].keys(): %}
-            {{stock_hist[key][date]}},
-          {% endfor %}
-        ]
-      },
-      {% endif %}
+$(function() {
+  //structure data
+  data = [
+    {% for date in stock_hist['Open'].keys(): %}
+      [ {{date.strftime('%s')|int*1000}}, {{stock_hist['Open'][date]}}, {{stock_hist['High'][date]}}, {{stock_hist['Low'][date]}}, {{stock_hist['Close'][date]}} ],
     {% endfor %}
-    ],
+  ]
+
+  // create the chart
+  $('#candle_chart').highcharts('StockChart', {
+
+
+      rangeSelector : {
+          selected : 1
+      },
+
+      title : {
+          text : '{{ticker}} Stock Price'
+      },
+
+      series : [{
+          type : 'candlestick',
+          name : '{{ticker}} Stock Price',
+          data : data,
+          dataGrouping : {
+              units : [
+                  [
+                      'week', // unit name
+                      [1] // allowed multiples
+                  ], [
+                      'month',
+                      [1, 2, 3, 4, 6]
+                  ]
+              ]
+          }
+      }]
   });
-}); 
+});
 </script>
 
-<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/stock/highstock.js"></script>
 <script src="http://code.highcharts.com/modules/exporting.js"></script>
 {% endblock %}

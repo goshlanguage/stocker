@@ -16,3 +16,4 @@ class Stock(Document):
   sentiment = IntField(default=0)
   meta_info = DictField()
   last_updated = DateTimeField(default=datetime.datetime.now()) 
+ 

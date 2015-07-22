@@ -6,7 +6,7 @@ Some of it's roadmap features include
 
   ~~- Historic Graphic for Stocks~~
   ~~- MongoEngine integration and utilization~~
-  - CandleStick Charts
+  ~~- CandleStick Charts~~
   - DataTables in Profile
   - Portfolio Tracking
   - Stock recommendations based on current stock

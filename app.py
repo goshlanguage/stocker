@@ -100,7 +100,7 @@ def premove():
 def search():
     ticker = request.form['search']
     #price = stocks.get_quote(ticker)
-    stock_hist = stocks.get_historic(ticker,7)
+    stock_hist = stocks.get_historic(ticker,365)
     view_symbol(ticker)
     return render_template('view_stock.html', ticker=ticker, stock_hist=stock_hist) 
 
