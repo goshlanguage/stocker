@@ -1,0 +1,5 @@
+pandas-datareader
+flask
+flask-script
+flask-bootstrap
+mongoengine

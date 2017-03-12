@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
-from flask.ext.script import Manager
-from flask.ext.bootstrap import Bootstrap
+from flask_script import Manager
+from flask_bootstrap import Bootstrap
 from models import Stock
 import stocks
 #from pymongo import MongoClient
@@ -15,7 +15,7 @@ bootstrap = Bootstrap(app)
 #stock = db.stock
 #user = db.user
 
-stocklist = Stock.objects() 
+stocklist = Stock.objects()
 
 def find_stock(ticker):
   try:
@@ -59,7 +59,7 @@ def badd():
 
 @app.route('/add/',methods=['POST'])
 def padd():
-    print("Symbol Add")    
+    print("Symbol Add")
     ticker = request.form['stock']
     add(ticker)
     return render_template('add.html', ticker=ticker)
@@ -67,8 +67,8 @@ def padd():
 #@app.route('/remove/<ticker>')
 #def remove(ticker):
 #    try:
-#      #user.remove({'stock':ticker}) 
-#      stock = Stock(symbol=ticker)[0].delete()     
+#      #user.remove({'stock':ticker})
+#      stock = Stock(symbol=ticker)[0].delete()
 #      return render_template('remove.html', ticker=ticker)
 #    except:
 #      return render_template('uhoh.html')
@@ -76,10 +76,10 @@ def padd():
 @app.route('/remove/<id>')
 def remove(id):
     try:
-      #user.remove({'stock':ticker}) 
+      #user.remove({'stock':ticker})
       stock = Stock(id=id)
       sym = stock['symbol']
-      stock.delete()     
+      stock.delete()
       return render_template('remove.html', ticker=sym)
     except:
       return render_template('uhoh.html')
@@ -102,17 +102,17 @@ def search():
     #price = stocks.get_quote(ticker)
     stock_hist = stocks.get_historic(ticker,365)
     view_symbol(ticker)
-    return render_template('view_stock.html', ticker=ticker, stock_hist=stock_hist) 
+    return render_template('view_stock.html', ticker=ticker, stock_hist=stock_hist)
 
 @app.route('/view/<symbol>',methods=['GET'])
 def view_symbol(symbol):
     stock_hist = stocks.get_historic(symbol,7)
     print(stock_hist)
-    return render_template('view_stock.html', ticker=symbol,stock_hist=stock_hist) 
+    return render_template('view_stock.html', ticker=symbol,stock_hist=stock_hist)
 
 @app.route('/profile/')
 def profile():
-    #stocklist = user.find()    
+    #stocklist = user.find()
     stocklist = Stock.objects()
     return render_template('profile.html', stocklist=stocklist, stocks=stocks)
 
