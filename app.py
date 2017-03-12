@@ -10,11 +10,6 @@ app = Flask(__name__)
 manager = Manager(app)
 bootstrap = Bootstrap(app)
 
-#mongo = MongoClient()
-#db = mongo.stock
-#stock = db.stock
-#user = db.user
-
 stocklist = Stock.objects()
 
 def find_stock(ticker):
